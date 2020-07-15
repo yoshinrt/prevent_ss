@@ -34,9 +34,18 @@ LRESULT CALLBACK WindowProc(
 	switch( Message ){
 	  case WM_TIMER:
 		GetCursorPos( &Point );
+		
 		if( Point.x == g_Point.x && Point.y == g_Point.y ){
 			Point.x ^= 1;
-			SetCursorPos( Point.x, Point.y );
+			
+			mouse_event(
+				MOUSEEVENTF_ABSOLUTE | MOUSEEVENTF_MOVE,
+				Point.x * 65535 / ( GetSystemMetrics( SM_CXSCREEN ) - 1 ),
+				Point.y * 65535 / ( GetSystemMetrics( SM_CYSCREEN ) - 1 ),
+				0, 0
+			);
+			
+			GetCursorPos( &Point );
 		}
 		g_Point = Point;
 		break;
@@ -110,7 +119,7 @@ int WINAPI _tWinMain(
 	
 	// タイマ設定
 	GetCursorPos( &g_Point );
-	SetTimer( g_hWnd, 0/*ID_TIMER*/, 1 * 1000, NULL );
+	SetTimer( g_hWnd, 0/*ID_TIMER*/, 290 * 1000, NULL );
 	
 	/* create the message loop */
 	
