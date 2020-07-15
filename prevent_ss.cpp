@@ -19,6 +19,7 @@ const TCHAR	*szWinClassName = WINDOW_CLASS;
 
 HINSTANCE	g_hInst;
 HWND		g_hWnd;
+POINT		g_Point;
 
 /*** window procedure *******************************************************/
 
@@ -33,7 +34,11 @@ LRESULT CALLBACK WindowProc(
 	switch( Message ){
 	  case WM_TIMER:
 		GetCursorPos( &Point );
-		SetCursorPos( Point.x ^ 1, Point.y );
+		if( Point.x == g_Point.x && Point.y == g_Point.y ){
+			Point.x ^= 1;
+			SetCursorPos( Point.x, Point.y );
+		}
+		g_Point = Point;
 		break;
 		
 	  case WM_DESTROY:				/* terminated by user					*/
@@ -104,7 +109,8 @@ int WINAPI _tWinMain(
 	UpdateWindow( hWnd );
 	
 	// タイマ設定
-	SetTimer( g_hWnd, 0/*ID_TIMER*/, 290 * 1000, NULL );
+	GetCursorPos( &g_Point );
+	SetTimer( g_hWnd, 0/*ID_TIMER*/, 1 * 1000, NULL );
 	
 	/* create the message loop */
 	
