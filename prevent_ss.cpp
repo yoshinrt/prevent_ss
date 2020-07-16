@@ -48,6 +48,8 @@ LRESULT CALLBACK WindowProc(
 			GetCursorPos( &Point );
 		}
 		g_Point = Point;
+		
+		SetThreadExecutionState( ES_DISPLAY_REQUIRED );
 		break;
 		
 	  case WM_DESTROY:				/* terminated by user					*/
@@ -119,7 +121,7 @@ int WINAPI _tWinMain(
 	
 	// タイマ設定
 	GetCursorPos( &g_Point );
-	SetTimer( g_hWnd, 0/*ID_TIMER*/, 290 * 1000, NULL );
+	SetTimer( g_hWnd, 0/*ID_TIMER*/, 60 * 1000, NULL );
 	
 	/* create the message loop */
 	
