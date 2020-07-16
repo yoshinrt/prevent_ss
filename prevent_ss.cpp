@@ -36,16 +36,12 @@ LRESULT CALLBACK WindowProc(
 		GetCursorPos( &Point );
 		
 		if( Point.x == g_Point.x && Point.y == g_Point.y ){
-			Point.x ^= 1;
-			
 			mouse_event(
 				MOUSEEVENTF_ABSOLUTE | MOUSEEVENTF_MOVE,
 				Point.x * 65535 / ( GetSystemMetrics( SM_CXSCREEN ) - 1 ),
 				Point.y * 65535 / ( GetSystemMetrics( SM_CYSCREEN ) - 1 ),
 				0, 0
 			);
-			
-			GetCursorPos( &Point );
 		}
 		g_Point = Point;
 		
